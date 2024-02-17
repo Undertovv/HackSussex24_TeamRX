@@ -3,6 +3,8 @@ package rxware;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.datafixer.fix.HangingEntityFix;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -52,8 +54,9 @@ class TestItem extends Item {
 	@Override
 	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
 		// Values are used in a String to provide more information
-		RXWare.LOGGER.info("Entity:" + entity.getEntityName());
+		RXWare.LOGGER.info("Entity: " + entity.getEntityName());
 
 		return ActionResult.SUCCESS;
 	}
+
 }
