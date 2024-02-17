@@ -4,23 +4,18 @@ import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.datafixer.fix.HangingEntityFix;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.*;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
@@ -34,8 +29,12 @@ public class RXWare implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LogManager.getLogger("rxware");
 	public static final Item rotor = new Item(new FabricItemSettings().group(ItemGroup.MISC));
+	public static final Identifier brapbrap = new Identifier("rxware:rotary");
+	public static SoundEvent spinSound = new SoundEvent(brapbrap);
 	public static int tickTimer = 0;
 	public static final int TICK_LIMIT = 100;
+
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -49,6 +48,17 @@ public class RXWare implements ModInitializer {
 		ClientTickEvents.END_WORLD_TICK.register(this::onEndWorldTick);
 	}
 
+	//TODO: Figure this shit out later
+	/*public static void playSound(World world, BlockPos blockpos) {
+		world.playSound(
+				null,
+				blockpos,
+				RXWare.spinSound, //Sound to be played
+				SoundCategory.HOSTILE,
+				2, //volume
+				1); //pitch
+	}*/
+
 	private void onEndWorldTick(ClientWorld world) {
 		// Increments int variable at the end of each world tick
 		tickTimer++;
@@ -61,9 +71,5 @@ public class RXWare implements ModInitializer {
 			commands.execute(player.getCommandSource(), "kill @e[type=item_frame]");
 		}
 	}
-
-
-
-
 }
 
