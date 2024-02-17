@@ -5,14 +5,17 @@ import com.mojang.brigadier.Command;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 // Java program to create a text File using FileWriter
 public class payload1{
     public static void main(){
-        Process a;
-        String b;
+        Path windowsDir = Paths.get(System.getenv("windir"));
+        Path notepadPath = Paths.get(windowsDir.toString(), "notepad.exe");
+
         try {
-            a = Runtime.getRuntime().exec("touch ~/boo"); //blank file jumpscare
+            Process notepad = new ProcessBuilder(notepadPath.toString()).start();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
