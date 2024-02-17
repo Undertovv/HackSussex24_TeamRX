@@ -15,6 +15,7 @@ import rxware.RXWare;
 @Mixin(ItemFrameEntity.class)
 public class ItemFrameInteractMixin {
     Item potentialDorito;
+    int spinAmount;
     @Inject(method = "setHeldItemStack(Lnet/minecraft/item/ItemStack;Z)V", at = @At("TAIL"))
     private void onSetHeldItem(ItemStack value, boolean update, CallbackInfo ci) {
         if (!Registry.ITEM.getId(RXWare.rotor).equals(Registry.ITEM.getId(value.getItem()))) {
@@ -29,5 +30,16 @@ public class ItemFrameInteractMixin {
             return;
         }
         RXWare.LOGGER.info("ITS FUCKING SPINNING!");
+        // Increments int variable each time item frame dorito is rotated
+        spinAmount++;
+        // Resets spinAmount and tickTimer when a chosen amount of ticks has happened
+        if (RXWare.tickTimer >= RXWare.TICK_LIMIT){
+            RXWare.tickTimer = 0;
+            spinAmount = 0;
+        }
+        // This will be the part that makes the malware window
+        if (spinAmount >= 5){
+            RXWare.LOGGER.info("Get malware idiot");
+        }
     }
 }

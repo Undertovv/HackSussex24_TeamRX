@@ -2,9 +2,11 @@ package rxware;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.datafixer.fix.HangingEntityFix;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -31,7 +33,9 @@ public class RXWare implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LogManager.getLogger("rxware");
-	public static final TestItem rotor = new TestItem(new FabricItemSettings().group(ItemGroup.MISC));
+	public static final Item rotor = new Item(new FabricItemSettings().group(ItemGroup.MISC));
+	public static int tickTimer = 0;
+	public static final int TICK_LIMIT = 100;
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -42,6 +46,12 @@ public class RXWare implements ModInitializer {
 		LOGGER.info("Wankel power!");
 
 		ServerEntityEvents.ENTITY_LOAD.register(this::onEntityLoad);
+		ClientTickEvents.END_WORLD_TICK.register(this::onEndWorldTick);
+	}
+
+	private void onEndWorldTick(ClientWorld world) {
+		// Increments int variable at the end of each world tick
+		tickTimer++;
 	}
 
 	private void onEntityLoad(Entity entity, ServerWorld serverWorld) {
@@ -56,27 +66,4 @@ public class RXWare implements ModInitializer {
 
 
 }
-class TestItem extends Item {
 
-	public TestItem(Settings settings) {
-		super(settings);
-		RXWare.LOGGER.info(("IT IS WORKING DUMBASS!"));
-	}
-
-	@Override
-	public ActionResult useOnBlock(ItemUsageContext context) {
-		// Does something when right-clicking a block with dorito item
-		RXWare.LOGGER.info("Did thing with item!");
-		RXWare.LOGGER.info(context);
-
-		return ActionResult.SUCCESS;
-	}
-	@Override
-	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-		// Does something when right-clicking an entity with dorito item
-		RXWare.LOGGER.info("Entity: " + entity.getEntityName());
-
-		return ActionResult.SUCCESS;
-	}
-
-}
