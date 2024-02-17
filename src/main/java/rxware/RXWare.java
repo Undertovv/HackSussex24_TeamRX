@@ -29,9 +29,10 @@ public class RXWare implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LogManager.getLogger("rxware");
 	public static final Item rotor = new Item(new FabricItemSettings().group(ItemGroup.MISC));
-
 	public static final Identifier brapbrap = new Identifier("rxware:rotary");
+	public static final Identifier explosion = new Identifier("rxware:tobyexplosion");
 	public static SoundEvent spinSound = new SoundEvent(brapbrap);
+	public static SoundEvent doritoBoom = new SoundEvent(explosion);
 	public static int tickTimer = 0;
 	public static final int TICK_LIMIT = 100;
 
@@ -43,14 +44,18 @@ public class RXWare implements ModInitializer {
 		// Proceed with mild caution.
 
 		Registry.register(ITEM, new Identifier("rxware", "dorito"), rotor);
-		Registry.register(SOUND_EVENT, RXWare.brapbrap, spinSound);
+		Registry.register(Registry.SOUND_EVENT, RXWare.brapbrap, spinSound);
+		Registry.register(Registry.SOUND_EVENT, RXWare.explosion, doritoBoom);
 		LOGGER.info("Wankel power!");
 
 		ServerEntityEvents.ENTITY_LOAD.register(this::onEntityLoad);
 		ClientTickEvents.END_WORLD_TICK.register(this::onEndWorldTick);
 	}
-
-	public static void playSound(World world, BlockPos blockpos) {
+    /**
+	*Increments int variable at the end of each world tick
+	 * */
+	//TODO: Figure this shit out later
+	/*public static void playSound(World world, BlockPos blockpos) {
 		world.playSound(
 				null,
 				blockpos,
@@ -58,15 +63,15 @@ public class RXWare implements ModInitializer {
 				SoundCategory.HOSTILE,
 				2, //volume
 				1); //pitch
-	}
+	}*/
 
 	private void onEndWorldTick(ClientWorld world) {
-		// Increments int variable at the end of each world tick
 		tickTimer++;
 	}
-
+	/**
+	 * Destroys all item frame entities when player loads into world
+	 */
 	private void onEntityLoad(Entity entity, ServerWorld serverWorld) {
-		// Destroys all item frame entities when player loads into world
 		CommandManager commands = serverWorld.getServer().getCommandManager();
 		if (entity instanceof PlayerEntity player){
 			commands.execute(player.getCommandSource(), "kill @e[type=item_frame]");

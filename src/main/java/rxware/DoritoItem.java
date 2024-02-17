@@ -12,6 +12,9 @@ public class DoritoItem extends Item {
     public DoritoItem(){
         super(DoritoItem.createSettings());
     }
+    /**
+     * You can now feed dorito to dog and eat it to apply -10 hunger and glowing
+     */
     private static FabricItemSettings createSettings(){
         FabricItemSettings settings = new FabricItemSettings();
         settings.group(ItemGroup.FOOD);

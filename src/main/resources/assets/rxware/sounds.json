@@ -3,5 +3,11 @@
     "sounds" : [
       "rxware:rotary"
     ]
+  },
+  "tobyexplosion" : {
+    "sounds" : [
+      "rxware:tobyexplosion"
+    ]
   }
+
 }
