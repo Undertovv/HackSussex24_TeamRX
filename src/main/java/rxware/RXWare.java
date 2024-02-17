@@ -10,11 +10,9 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.datafixer.fix.HangingEntityFix;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.*;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.world.ServerWorld;
@@ -33,7 +31,7 @@ public class RXWare implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LogManager.getLogger("rxware");
-	public static final Item rotor = new Item(new FabricItemSettings().group(ItemGroup.MISC));
+	public static final DoritoItem rotor = new DoritoItem();
 	public static int tickTimer = 0;
 	public static final int TICK_LIMIT = 100;
 	@Override
@@ -64,6 +62,6 @@ public class RXWare implements ModInitializer {
 
 
 
-
 }
+
 
