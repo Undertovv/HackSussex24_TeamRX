@@ -34,7 +34,7 @@ public class RXWare implements ModInitializer {
 	public static SoundEvent spinSound = new SoundEvent(brapbrap);
 	public static SoundEvent doritoBoom = new SoundEvent(explosion);
 	public static int tickTimer = 0;
-	public static final int TICK_LIMIT = 100;
+	public static final int TICK_LIMIT = 60;
 
 
 	@Override
