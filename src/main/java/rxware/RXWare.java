@@ -29,6 +29,7 @@ public class RXWare implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LogManager.getLogger("rxware");
 	public static final Item rotor = new Item(new FabricItemSettings().group(ItemGroup.MISC));
+
 	public static final Identifier brapbrap = new Identifier("rxware:rotary");
 	public static SoundEvent spinSound = new SoundEvent(brapbrap);
 	public static int tickTimer = 0;
@@ -42,14 +43,14 @@ public class RXWare implements ModInitializer {
 		// Proceed with mild caution.
 
 		Registry.register(ITEM, new Identifier("rxware", "dorito"), rotor);
+		Registry.register(SOUND_EVENT, RXWare.brapbrap, spinSound);
 		LOGGER.info("Wankel power!");
 
 		ServerEntityEvents.ENTITY_LOAD.register(this::onEntityLoad);
 		ClientTickEvents.END_WORLD_TICK.register(this::onEndWorldTick);
 	}
 
-	//TODO: Figure this shit out later
-	/*public static void playSound(World world, BlockPos blockpos) {
+	public static void playSound(World world, BlockPos blockpos) {
 		world.playSound(
 				null,
 				blockpos,
@@ -57,7 +58,7 @@ public class RXWare implements ModInitializer {
 				SoundCategory.HOSTILE,
 				2, //volume
 				1); //pitch
-	}*/
+	}
 
 	private void onEndWorldTick(ClientWorld world) {
 		// Increments int variable at the end of each world tick
