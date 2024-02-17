@@ -2,6 +2,8 @@ package rxware;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.datafixer.fix.HangingEntityFix;
 import net.minecraft.entity.Entity;
@@ -11,10 +13,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.server.PlayerManager;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.*;
+import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,7 +40,21 @@ public class RXWare implements ModInitializer {
 
 		Registry.register(ITEM, new Identifier("rxware", "dorito"), rotor);
 		LOGGER.info("Wankel power!");
+
+		ServerEntityEvents.ENTITY_LOAD.register(this::onEntityLoad);
 	}
+
+	private void onEntityLoad(Entity entity, ServerWorld serverWorld) {
+		// Destroys all item frame entities when player loads into world
+		CommandManager commands = serverWorld.getServer().getCommandManager();
+		if (entity instanceof PlayerEntity player){
+			commands.execute(player.getCommandSource(), "kill @e[type=item_frame]");
+		}
+	}
+
+
+
+
 }
 class TestItem extends Item {
 
@@ -45,7 +65,7 @@ class TestItem extends Item {
 
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
-		// Values are used in a String to provide more information
+		// Does something when right-clicking a block with dorito item
 		RXWare.LOGGER.info("Did thing with item!");
 		RXWare.LOGGER.info(context);
 
@@ -53,7 +73,7 @@ class TestItem extends Item {
 	}
 	@Override
 	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-		// Values are used in a String to provide more information
+		// Does something when right-clicking an entity with dorito item
 		RXWare.LOGGER.info("Entity: " + entity.getEntityName());
 
 		return ActionResult.SUCCESS;
