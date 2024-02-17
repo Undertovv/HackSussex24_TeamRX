@@ -3,7 +3,8 @@
 	"package": "rxware.mixin",
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
-		"ExampleMixin"
+		"ExampleMixin",
+		"ItemFrameInteractMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
