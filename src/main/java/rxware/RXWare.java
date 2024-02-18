@@ -14,6 +14,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.*;
@@ -50,19 +51,22 @@ public class RXWare implements ModInitializer {
 
 		ServerEntityEvents.ENTITY_LOAD.register(this::onEntityLoad);
 		ClientTickEvents.END_WORLD_TICK.register(this::onEndWorldTick);
+		//playSound();
 	}
     /**
 	*Increments int variable at the end of each world tick
 	 * */
 	//TODO: Figure this shit out later
 	/*public static void playSound(World world, BlockPos blockpos) {
-		world.playSound(
-				null,
-				blockpos,
-				RXWare.spinSound, //Sound to be played
-				SoundCategory.HOSTILE,
-				2, //volume
-				1); //pitch
+		if(!world.isClient) {
+			world.playSound(
+					null,
+					blockpos,
+					RXWare.spinSound, //Sound to be played
+					SoundCategory.HOSTILE,
+					2, //volume
+					1); //pitch
+		}
 	}*/
 
 	private void onEndWorldTick(ClientWorld world) {
