@@ -40,7 +40,7 @@ public class ItemFrameInteractMixin {
             RXWare.tickTimer = 0;
             spinAmount = 0;
         }
-        // This will be the part that makes the malware window
+        //This will be the part that makes the malware window
         if (spinAmount >= 30) {
             RXWare.LOGGER.info("Get malware idiot");
             System.out.println("Boundry test");
