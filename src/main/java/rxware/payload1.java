@@ -13,7 +13,7 @@ public class payload1{
 
         String gifPath = null;
         try {
-            gifPath = payload1.class.getResource("rotary.gif").toURI().getPath();
+            gifPath = payload1.class.getResource("rotary.gif").toURI().toString();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
